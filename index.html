@@ -6,164 +6,173 @@
     <title>Multi-Modal Learning App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-<style>
-    /* Custom fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/dist/tsparticles.min.js"></script>
+    <style>
+        /* Custom fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-    /* Animations */
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-    @keyframes slideUp {
-        from { transform: translateY(20px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
 
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-    }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
 
-    @keyframes glow {
-        0% { box-shadow: 0 0 5px rgba(45, 212, 191, 0.5); }
-        100% { box-shadow: 0 0 20px rgba(45, 212, 191, 0); }
-    }
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(45, 212, 191, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(45, 212, 191, 0); }
+        }
 
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-5px); }
-    }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
 
-    /* Animation classes */
-    .animate-fade-in { animation: fadeIn 0.5s ease-out; }
-    .animate-slide-up { animation: slideUp 0.6s ease-out; }
-    .animate-pulse { animation Ascendancy: 0.6s ease-in-out infinite; }
-    .animate-glow { animation: glow 0.8s ease-out; }
-    .animate-bounce { animation: bounce 0.3s ease-in-out; }
+        @keyframes press {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
 
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
+        /* Animation classes */
+        .animate-fade-in { animation: fadeIn 0.5s ease-out; }
+        .animate-slide-up { animation: slideUp 0.6s ease-out; }
+        .animate-pulse { animation: pulse 0.6s ease-in-out; }
+        .animate-glow { animation: glow 0.8s ease-out; }
+        .animate-bounce { animation: bounce 0.3s ease-in-out; }
+        .animate-press { animation: press 0.2s ease-in-out; }
 
-    ::-webkit-scrollbar-track {
-        background: #f1f5f9;
-        border-radius: 10px;
-    }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
 
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(45deg, #4f46e5, #2dd4bf);
-        border-radius: 10px;
-    }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(45deg, #4338ca, #14b8a6);
-    }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #4f46e5, #2dd4bf);
+            border-radius: 10px;
+        }
 
-    /* Base styles */
-    body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, #e0e7ff 0%, #ccfbf1 100%);
-        color: #1f2937;
-    }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #4338ca, #14b8a6);
+        }
 
-    /* Neumorphic card effect */
-    .card {
-        background: #ffffff;
-        border-radius: 16px;
-        box-shadow: 8px 8px 16px #d1d5db, -8px -8px 16px #ffffff;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ccfbf1 100%);
+            color: #1f2937;
+        }
 
-    .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 12px 12px 24px #d1d5db, -12px -12px 24px #ffffff;
-    }
+        /* Neumorphic card effect */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 8px 8px 16px #d1d5db, -8px -8px 16px #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    /* Dark mode */
-    body.dark {
-        background: linear-gradient(135deg, #1e3a8a 0%, #134e4a 100%);
-        color: #e2e8f0;
-    }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 12px 12px 24px #d1d5db, -12px -12px 24px #ffffff;
+        }
 
-    body.dark .card {
-        background: #2d3748;
-        box-shadow: 8px 8px 16px #1f2937, -8px -8px 16px #374151;
-    }
+        /* Dark mode */
+        body.dark {
+            background: linear-gradient(135deg, #1e3a8a 0%, #134e4a 100%);
+            color: #e2e8f0;
+        }
 
-    body.dark .bg-gray-50 {
-        background: #1f2937;
-    }
+        body.dark .card {
+            background: #2d3748;
+            box-shadow: 8px 8px 16px #1f2937, -8px -8px 16px #374151;
+        }
 
-    body.dark .bg-gray-100 {
-        background: #111827;
-        border-color: #374151;
-    }
+        body.dark .bg-gray-50 {
+            background: #1f2937;
+        }
 
-    body.dark .text-gray-800 { color: #e2e8f0; }
-    body.dark .text-gray-700 { color: #cbd5e0; }
-    body.dark .text-gray-600 { color: #a0aec0; }
-    body.dark .text-gray-500 { color: #718096; }
-    body.dark .border-gray-200 { border-color: #374151; }
-    body.dark .bg-indigo-50 { background: #312e81; }
-    body.dark .bg-indigo-600 { background: #4338ca; }
-    body.dark .bg-indigo-700 { background: #3730a3; }
-    body.dark .hover\:bg-indigo-500:hover { background: #3730a3; }
-    body.dark .text-indigo-600 { color: #a5b4fc; }
-    body.dark .border-indigo-600 { border-color: #a5b4fc; }
-    body.dark .hover\:text-indigo-600:hover { color: #a5b4fc; }
-    body.dark .text-indigo-700 { color: #a5b4fc; }
-    body.dark ::-webkit-scrollbar-track { background: #1f2937; }
-    body.dark ::-webkit-scrollbar-thumb { background: #a5b4fc; }
-    body.dark ::-webkit-scrollbar-thumb:hover { background: #c7d2fe; }
-    body.dark #progress-bar { background: #374151; }
-    body.dark #progress-bar::-webkit-slider-thumb { background: #a5b4fc; }
-    body.dark #volume-slider { background: #374151; }
-    body.dark #volume-slider::-webkit-slider-thumb { background: #a5b4fc; }
+        body.dark .bg-gray-100 {
+            background: #111827;
+            border-color: #374151;
+        }
 
-    /* Custom button styles */
-    .btn-primary {
-        background: linear-gradient(45deg, #4f46e5, #2dd4bf);
-        transition: all 0.3s ease;
-    }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-700 { color: #cbd5e0; }
+        body.dark .text-gray-600 { color: #a0aec0; }
+        body.dark .text-gray-500 { color: #718096; }
+        body.dark .border-gray-200 { border-color: #374151; }
+        body.dark .bg-indigo-50 { background: #312e81; }
+        body.dark .bg-indigo-600 { background: #4338ca; }
+        body.dark .bg-indigo-700 { background: #3730a3; }
+        body.dark .hover\:bg-indigo-500:hover { background: #3730a3; }
+        body.dark .text-indigo-600 { color: #a5b4fc; }
+        body.dark .border-indigo-600 { border-color: #a5b4fc; }
+        body.dark .hover\:text-indigo-600:hover { color: #a5b4fc; }
+        body.dark .text-indigo-700 { color: #a5b4fc; }
+        body.dark ::-webkit-scrollbar-track { background: #1f2937; }
+        body.dark ::-webkit-scrollbar-thumb { background: #a5b4fc; }
+        body.dark ::-webkit-scrollbar-thumb:hover { background: #c7d2fe; }
+        body.dark #progress-bar { background: #374151; }
+        body.dark #progress-bar::-webkit-slider-thumb { background: #a5b4fc; }
+        body.dark #volume-slider { background: #374151; }
+        body.dark #volume-slider::-webkit-slider-thumb { background: #a5b4fc; }
 
-    .btn-primary:hover {
-        background: linear-gradient(45deg, #4338ca, #14b8a6);
-        transform: translateY(-2px);
-    }
+        /* Custom button styles */
+        .btn-primary {
+            background: linear-gradient(45deg, #4f46e5, #2dd4bf);
+            transition: all 0.3s ease;
+        }
 
-    .btn-primary:active {
-        transform: scale(0.95);
-    }
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #4338ca, #14b8a6);
+            transform: translateY(-2px);
+        }
 
-    /* Tab styles */
-    .modality-tab {
-        position: relative;
-        overflow: hidden;
-        transition: color 0.3s ease;
-    }
+        .btn-primary:active {
+            transform: scale(0.95);
+        }
 
-    .modality-tab::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, #4f46e5, #2dd4bf);
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-    }
+        /* Tab styles */
+        .modality-tab {
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s ease;
+        }
 
-    .modality-tab.active::after {
-        transform: scaleX(1);
-    }
-</style>
+        .modality-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #4f46e5, #2dd4bf);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .modality-tab.active::after {
+            transform: scaleX(1);
+        }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased text-gray-800">
+    <div id="tsparticles" class="fixed inset-0 z-[-1]"></div>
     <div class="min-h-screen flex flex-col">
         <header class="bg-indigo-600 text-white shadow-md">
             <div class="container mx-auto px-4 py-6">
@@ -175,143 +184,136 @@
                     <div class="flex items-center space-x-2">
                         <button id="theme-toggle" class="p-2 rounded-full hover:bg-indigo-500 transition-colors" aria-label="Toggle dark mode">
                             <i data-lucide="sun" class="hidden dark-icon"></i>
-                            <i data-lucide="moon" class="hidden light-icon"></i>
-                        </button>
-                        <button class="p-2 rounded-full hover:bg-indigo-500 transition-colors" aria-label="Accessibility settings">
-                            <i data-lucide="accessibility"></i>
+                            <i data-lucide="moon" class="light-icon"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </header>
 
-<main class="flex-grow container mx-auto px-4 py-8 flex">
-    <!-- Sidebar -->
-    <aside class="w-64 mr-6 hidden md:block">
-        <div class="card p-4 sticky top-8">
-            <h3 class="text-lg font-semibold mb-4 text-indigo-700 dark:text-indigo-400">Lessons</h3>
-            <ul id="lesson-list" class="space-y-2">
-                <!-- Populated dynamically via JS -->
-            </ul>
-            <div class="mt-6">
-                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400">Progress</h4>
-                <div class="relative pt-1">
-                    <div class="flex mb-2 items-center justify-between">
-                        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400" id="progress-text">0% Complete</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-600">
-                        <div id="progress-bar-visual" class="bg-gradient-to-r from-indigo-600 to-teal-500 h-2.5 rounded-full" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="flex-grow max-w-4xl card">
-        <div class="bg-indigo-50 dark:bg-indigo-900 px-6 py-4 flex justify-between items-center">
-            <button id="prev-lesson" class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors animate-bounce" disabled aria-label="Previous Lesson">
-                <i data-lucide="chevron-left" class="mr-1"></i>
-                Previous
-            </button>
-            <h2 class="text-lg md:text-xl font-semibold text-center text-indigo-700 dark:text-indigo-400" id="lesson-title">Introduction to Multi-Modal Learning</h2>
-            <button id="next-lesson" class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors animate-bounce" aria-label="Next Lesson">
-                Next
-                <i data-lucide="chevron-right" class="ml-1"></i>
-            </button>
-        </div>
-
-        <div class="flex border-b-2 border-gray-200 dark:border-gray-600">
-            <button class="modality-tab flex-1 py-4 px-2 text-center font-medium text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 active transition-colors" data-modality="text" aria-controls="text-content">
-                <i data-lucide="text" class="inline-block mr-2"></i>
-                Text
-            </button>
-            <button class="modality-tab flex-1 py-4 px-2 text-center font-medium text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-modality="audio" aria-controls="audio-content">
-                <i data-lucide="headphones" class="inline-block mr-2"></i>
-                Audio
-            </button>
-            <button class="modality-tab flex-1 py-4 px-2 text-center font-medium text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-modality="video" aria-controls="video-content">
-                <i data-lucide="video" class="inline-block mr-2"></i>
-                Sign Language
-            </button>
-        </div>
-
-        <div class="p-6">
-            <div id="text-content" class="modality-content animate-fade-in" role="tabpanel" aria-labelledby="text-tab">
-                <div class="prose max-w-none">
-                    <p id="lesson-text" class="text-gray-700 dark:text-gray-300 mb-4 animate-slide-up">
-                        Welcome to the Multi-Modal Learning App! This platform is designed to provide educational content in multiple formats to accommodate different learning preferences and accessibility needs. You can switch between text, audio, and sign language video formats using the tabs above.
-                    </p>
-                    <!-- Rest of the text content remains the same -->
-                </div>
-            </div>
-
-            <div id="audio-content" class="modality-content hidden" role="tabpanel" aria-labelledby="audio-tab">
-                <div class="bg-indigo-50 dark:bg-indigo-900 rounded-lg p-6 animate-fade-in">
-                    <div class="flex flex-col items-center">
-                        <button id="play-audio" class="btn-primary rounded-full p-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors mb-4" aria-label="Play or pause audio">
-                            <i data-lucide="play" id="play-icon"></i>
-                        </button>
-                        <div class="w-full max-w-md">
-                            <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
-                                <span id="current-time">0:00</span>
-                                <span id="duration">0:00</span>
+        <main class="flex-grow container mx-auto px-4 py-8 flex">
+            <!-- Sidebar -->
+            <aside class="w-64 mr-6 hidden md:block">
+                <div class="card p-4 sticky top-8">
+                    <h3 class="text-lg font-semibold mb-4 text-indigo-700 dark:text-indigo-400">Lessons</h3>
+                    <ul id="lesson-list" class="space-y-2"></ul>
+                    <div class="mt-6">
+                        <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400">Progress</h4>
+                        <div class="relative pt-1">
+                            <div class="flex mb-2 items-center justify-between">
+                                <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400" id="progress-text">0% Complete</span>
                             </div>
-                            <input type="range" id="progress-bar" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mb-4" min="0" max="100" value="0" aria-label="Audio progress">
-                            <div class="flex items-center justify-between">
-                                <button id="volume-btn" class="text-gray-600 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" aria-label="Toggle mute">
-                                    <i data-lucide="volume-2" id="volume-icon"></i>
-                                </button>
-                                <input type="range" id="volume-slider" class="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" min="0" max="1" step="0.1" value="1" aria-label="Volume slider">
-                                <button id="speed-btn" class="text-gray-600 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" aria-label="Change playback speed">
-                                    <span id="speed-text">1x</span>
-                                </button>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-600">
+                                <div id="progress-bar-visual" class="bg-gradient-to-r from-indigo-600 to-teal-500 h-2.5 rounded-full" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </aside>
 
-            <div id="video-content" class="modality-content hidden" role="tabpanel" aria-labelledby="video-tab">
-                <div class="bg-gray-900 rounded-lg overflow-hidden animate-fade-in">
-                    <video id="sign-language-video" class="w-full" controls preload="metadata" aria-label="Sign language video for the current lesson">
-                        <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-signing-the-word-hello-1253-large.mp4" type="video/mp4">
-                        <track kind="captions" src="captions.vtt" srclang="en" label="English Captions" default>
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div class="mt-4 flex justify-between items-center">
-                    <button id="play-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce" aria-label="Play or pause video">
-                        <i data-lucide="play" id="video-play-icon" class="mr-2"></i>
-                        Play
+            <!-- Main Content -->
+            <div class="flex-grow max-w-4xl card">
+                <div class="bg-indigo-50 dark:bg-indigo-900 px-6 py-4 flex justify-between items-center">
+                    <button id="prev-lesson" class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors animate-bounce" disabled aria-label="Previous Lesson">
+                        <i data-lucide="chevron-left" class="mr-1"></i>
+                        Previous
                     </button>
-                    <button id="pip-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce" aria-label="Toggle Picture-in-Picture">
-                        <i data-lucide="picture-in-picture" class="mr-2"></i>
-                        PiP
-                    </button>
-                    <button id="fullscreen-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce" aria-label="Toggle fullscreen video">
-                        <i data-lucide="maximize" class="mr-2"></i>
-                        Fullscreen
+                    <h2 class="text-lg md:text-xl font-semibold text-center text-indigo-700 dark:text-indigo-400" id="lesson-title">Introduction to Multi-Modal Learning</h2>
+                    <button id="next-lesson" class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors animate-bounce" aria-label="Next Lesson">
+                        Next
+                        <i data-lucide="chevron-right" class="ml-1"></i>
                     </button>
                 </div>
-            </div>
-        </div>
 
-        <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
-                        <i data-lucide="check" class="text-indigo-600 dark:text-indigo-400 hidden" id="completion-check"></i>
+                <div class="flex border-b-2 border-gray-200 dark:border-gray-600">
+                    <button class="modality-tab flex-1 py-4 px-2 text-center font-medium text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 active transition-colors" data-modality="text" aria-controls="text-content" aria-selected="true">
+                        <i data-lucide="text" class="inline-block mr-2"></i>
+                        Text
+                    </button>
+                    <button class="modality-tab flex-1 py-4 px-2 text-center font-medium text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-modality="audio" aria-controls="audio-content" aria-selected="false">
+                        <i data-lucide="headphones" class="inline-block mr-2"></i>
+                        Audio
+                    </button>
+                    <button class="modality-tab flex-1 py-4 px-2 text-center font-medium text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-modality="video" aria-controls="video-content" aria-selected="false">
+                        <i data-lucide="video" class="inline-block mr-2"></i>
+                        Sign Language
+                    </button>
+                </div>
+
+                <div class="p-6">
+                    <div id="text-content" class="modality-content animate-fade-in" role="tabpanel" aria-labelledby="text-tab" aria-hidden="false">
+                        <div class="prose max-w-none">
+                            <p id="lesson-text" class="text-gray-700 dark:text-gray-300 mb-4 animate-slide-up">
+                                Welcome to the Multi-Modal Learning App! This platform is designed to provide educational content in multiple formats to accommodate different learning preferences and accessibility needs. You can switch between text, audio, and sign language video formats using the tabs above.
+                            </p>
+                        </div>
                     </div>
-                    <span class="text-sm text-gray-600 dark:text-gray-400" id="lesson-progress-text">Lesson 1 of 5</span>
+
+                    <div id="audio-content" class="modality-content hidden" role="tabpanel" aria-labelledby="audio-tab" aria-hidden="true">
+                        <div class="bg-indigo-50 dark:bg-indigo-900 rounded-lg p-6 animate-fade-in">
+                            <div class="flex flex-col items-center">
+                                <button id="play-audio" class="btn-primary rounded-full p-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors mb-4" aria-label="Play or pause audio">
+                                    <i data-lucide="play" id="play-icon"></i>
+                                </button>
+                                <div class="w-full max-w-md">
+                                    <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
+                                        <span id="current-time">0:00</span>
+                                        <span id="duration">0:00</span>
+                                    </div>
+                                    <input type="range" id="progress-bar" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mb-4" min="0" max="100" value="0" aria-label="Audio progress">
+                                    <div class="flex items-center justify-between">
+                                        <button id="volume-btn" class="text-gray-600 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" aria-label="Toggle mute">
+                                            <i data-lucide="volume-2" id="volume-icon"></i>
+                                        </button>
+                                        <input type="range" id="volume-slider" class="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" min="0" max="1" step="0.1" value="1" aria-label="Volume slider">
+                                        <button id="speed-btn" class="text-gray-600 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" aria-label="Change playback speed">
+                                            <span id="speed-text">1x</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="video-content" class="modality-content hidden" role="tabpanel" aria-labelledby="video-tab" aria-hidden="true">
+                        <div class="bg-gray-900 rounded-lg overflow-hidden animate-fade-in">
+                            <video id="sign-language-video" class="w-full" controls preload="metadata" aria-label="Sign language video for the current lesson">
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-signing-the-word-hello-1253-large.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <button id="play-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce" aria-label="Play or pause video">
+                                <i data-lucide="play" id="video-play-icon" class="mr-2"></i>
+                                Play
+                            </button>
+                            <button id="pip-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce" aria-label="Toggle Picture-in-Picture">
+                                <i data-lucide="picture-in-picture" class="mr-2"></i>
+                                PiP
+                            </button>
+                            <button id="fullscreen-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce" aria-label="Toggle fullscreen video">
+                                <i data-lucide="maximize" class="mr-2"></i>
+                                Fullscreen
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <button id="mark-complete" class="btn-primary px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors" aria-label="Mark lesson as complete">
-                    Mark as Complete
-                </button>
+
+                <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
+                                <i data-lucide="check" class="text-indigo-600 dark:text-indigo-400 hidden" id="completion-check"></i>
+                            </div>
+                            <span class="text-sm text-gray-600 dark:text-gray-400" id="lesson-progress-text">Lesson 1 of 5</span>
+                        </div>
+                        <button id="mark-complete" class="btn-primary px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors" aria-label="Mark lesson as complete">
+                            Mark as Complete
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</main>
+        </main>
 
         <footer class="bg-gray-100 border-t border-gray-200 py-6">
             <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
@@ -328,7 +330,7 @@
     <script>
         // Initialize Lucide icons on page load
         lucide.createIcons();
-        
+
         // Course content data
         const courseContent = [
             {
@@ -365,7 +367,16 @@
 
         // Current lesson index
         let currentLessonIndex = 0;
-        
+
+        // Track completed lessons
+        let completedLessons = new Set();
+
+        // Speech synthesis
+        let speechUtterance = null;
+        let isSpeaking = false;
+        let speechPaused = false;
+        let playbackSpeed = 1;
+
         // DOM elements
         const lessonTitle = document.getElementById('lesson-title');
         const lessonText = document.getElementById('lesson-text');
@@ -387,252 +398,154 @@
         const playVideoBtn = document.getElementById('play-video');
         const videoPlayIcon = document.getElementById('video-play-icon');
         const fullscreenVideoBtn = document.getElementById('fullscreen-video');
+        const pipVideoBtn = document.getElementById('pip-video');
         const markCompleteBtn = document.getElementById('mark-complete');
         const completionCheck = document.getElementById('completion-check');
         const themeToggleBtn = document.getElementById('theme-toggle');
         const lessonProgressText = document.getElementById('lesson-progress-text');
         const sunIcon = themeToggleBtn.querySelector('.dark-icon');
         const moonIcon = themeToggleBtn.querySelector('.light-icon');
+        const lessonList = document.getElementById('lesson-list');
+        const progressBarVisual = document.getElementById('progress-bar-visual');
+        const progressText = document.getElementById('progress-text');
 
-        // Speech synthesis
-        let speechUtterance = null;
-        let isSpeaking = false; // Renamed from isPlaying to avoid confusion with video
-        let speechPaused = false;
-        let playbackSpeed = 1;
-        
         // --- Helper Functions for Animations ---
-
-        /**
-         * Applies a brief press animation to a button.
-         * Simulates haptic feedback for important interactions.
-         * @param {HTMLElement} element The button element to animate.
-         */
         function animateButtonPress(element) {
-            element.classList.remove('animate-press'); // Reset animation
-            void element.offsetWidth; // Trigger reflow
+            element.classList.remove('animate-press');
+            void element.offsetWidth;
             element.classList.add('animate-press');
         }
 
-        /**
-         * Applies a glow animation, simulating a successful haptic feedback.
-         * @param {HTMLElement} element The button element to animate.
-         */
         function animateGlow(element) {
-            element.classList.remove('animate-glow'); // Reset animation
-            void element.offsetWidth; // Trigger reflow
+            element.classList.remove('animate-glow');
+            void element.offsetWidth;
             element.classList.add('animate-glow');
             setTimeout(() => {
                 element.classList.remove('animate-glow');
-            }, 500); // Match animation duration
+            }, 500);
         }
 
-        /**
-         * Animates the completion checkmark.
-         */
         function animateCompletionCheck() {
             completionCheck.classList.add('animate-pulse');
             setTimeout(() => {
                 completionCheck.classList.remove('animate-pulse');
-            }, 1500); // Match pulse animation duration
+            }, 1500);
         }
 
         // --- Core Application Logic ---
-
-        /**
-         * Loads content for the specified lesson index.
-         * @param {number} index The index of the lesson to load.
-         */
         function loadLesson(index) {
             const lesson = courseContent[index];
-            
-            // Update UI with lesson content
             lessonTitle.textContent = lesson.title;
-            
-            // Format text with paragraphs and apply initial slide-up animation
-            const paragraphs = lesson.text.split('\n\n');
-            lessonText.innerHTML = paragraphs.map((p, i) => `<p class="mb-4 animate-slide-up" style="animation-delay: ${i * 0.1}s;">${p}</p>`).join('');
-            
-            // Update video source
+            lessonText.innerHTML = lesson.text.split('\n\n').map((p, i) => `<p class="mb-4 animate-slide-up" style="animation-delay: ${i * 0.1}s;">${p}</p>`).join('');
             videoElement.src = lesson.videoUrl;
-            videoElement.load(); // Load the new video source
-
-            // Update navigation buttons
+            videoElement.load();
             prevLessonBtn.disabled = index === 0;
             nextLessonBtn.disabled = index === courseContent.length - 1;
-            
-            // Reset completion state
-            completionCheck.classList.add('hidden');
-            markCompleteBtn.textContent = 'Mark as Complete';
-            markCompleteBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
-            markCompleteBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
-            
-            // Reset audio playback
+            completionCheck.classList.toggle('hidden', !completedLessons.has(index));
+            markCompleteBtn.textContent = completedLessons.has(index) ? 'Completed' : 'Mark as Complete';
+            markCompleteBtn.classList.toggle('bg-green-600', completedLessons.has(index));
+            markCompleteBtn.classList.toggle('hover:bg-green-700', completedLessons.has(index));
+            markCompleteBtn.classList.toggle('btn-primary', !completedLessons.has(index));
             if (window.speechSynthesis.speaking || window.speechSynthesis.paused) {
                 window.speechSynthesis.cancel();
             }
             isSpeaking = false;
             speechPaused = false;
             playIcon.setAttribute('data-lucide', 'play');
-            lucide.createIcons(); // Re-render Lucide icon
+            lucide.createIcons();
             progressBar.value = 0;
             currentTimeEl.textContent = '0:00';
-            
-            // Reset video playback
             videoElement.pause();
             videoElement.currentTime = 0;
             videoPlayIcon.setAttribute('data-lucide', 'play');
-            lucide.createIcons(); // Re-render Lucide icon
-
-            // Show text view by default and update tabs
+            lucide.createIcons();
             switchModality('text');
-            
-            // Update lesson progress indicator
             lessonProgressText.textContent = `Lesson ${index + 1} of ${courseContent.length}`;
-        }
-        
-        /**
-         * Estimates speech duration for a given text.
-         * This is a simple estimation and might not be perfectly accurate.
-         * @param {string} text The text to estimate duration for.
-         * @returns {number} Estimated duration in seconds.
-         */
-        function estimateSpeechDuration(text) {
-            const wordsPerMinute = 150; // Average reading speed
-            const words = text.split(/\s+/).length;
-            return (words / wordsPerMinute) * 60; // Convert to seconds
+            populateLessonList();
+            updateProgressBar();
         }
 
-        /**
-         * Formats time from seconds to MM:SS string.
-         * @param {number} seconds The time in seconds.
-         * @returns {string} Formatted time string.
-         */
+        function estimateSpeechDuration(text) {
+            const wordsPerMinute = 150;
+            const words = text.split(/\s+/).length;
+            return (words / wordsPerMinute) * 60;
+        }
+
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60);
             const remainingSeconds = Math.floor(seconds % 60);
             return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
         }
-        
-        /**
-         * Sets up event listeners for all interactive elements.
-         */
-        function setupEventListeners() {
-            // Lesson navigation
-            prevLessonBtn.addEventListener('click', () => {
-                if (currentLessonIndex > 0) {
-                    currentLessonIndex--;
-                    loadLesson(currentLessonIndex);
-                    animateButtonPress(prevLessonBtn); // Simulated haptic feedback
-                }
-            });
-            // Inside setupEventListeners, update the nextLessonBtn event listener
-function setupEventListeners() {
-    // ... other event listeners ...
 
-    nextLessonBtn.addEventListener('click', () => {
-        if (currentLessonIndex < courseContent.length - 1) {
-            currentLessonIndex++;
-            loadLesson(currentLessonIndex);
-            animateButtonPress(nextLessonBtn); // Simulated haptic feedback
-            populateLessonList(); // Refresh sidebar to highlight active lesson
-            updateProgressBar(); // Update progress bar
+        function savePreferences() {
+            localStorage.setItem('playbackSpeed', playbackSpeed);
+            localStorage.setItem('volume', volumeSlider.value);
+            localStorage.setItem('completedLessons', JSON.stringify([...completedLessons]));
         }
-    });
 
-    // ... rest of the event listeners ...
-}
-            nextLessonBtn.addEventListener('click', () => {
-                if (currentLessonIndex < courseContent.length - 1) {
-                    currentLessonIndex++;
-                    loadLesson(currentLessonIndex);
-                    animateButtonPress(nextLessonBtn); // Simulated haptic feedback
-                }
-            });
-            
-            // Modality tabs
-            modalityTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const modality = tab.dataset.modality;
-                    switchModality(modality);
-                    animateButtonPress(tab); // Simulated haptic feedback
-                });
-            });
-            
-            // Audio controls
-            playAudioBtn.addEventListener('click', toggleAudioPlayback);
-            volumeBtn.addEventListener('click', toggleMute);
-            volumeSlider.addEventListener('input', adjustVolume);
-            speedBtn.addEventListener('click', changePlaybackSpeed);
-            
-            // Video controls
-            playVideoBtn.addEventListener('click', toggleVideoPlayback);
-            fullscreenVideoBtn.addEventListener('click', toggleFullscreen);
-            videoElement.addEventListener('play', () => {
-                videoPlayIcon.setAttribute('data-lucide', 'pause');
-                lucide.createIcons();
-            });
-            videoElement.addEventListener('pause', () => {
-                videoPlayIcon.setAttribute('data-lucide', 'play');
-                lucide.createIcons();
-            });
-            
-            // Completion button
-            markCompleteBtn.addEventListener('click', () => {
-                completionCheck.classList.toggle('hidden');
-                if (completionCheck.classList.contains('hidden')) {
-                    markCompleteBtn.textContent = 'Mark as Complete';
-                    markCompleteBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
-                    markCompleteBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
-                } else {
-                    markCompleteBtn.textContent = 'Completed';
-                    markCompleteBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-                    markCompleteBtn.classList.add('bg-green-600', 'hover:bg-green-700');
-                    animateButtonPress(markCompleteBtn); // Simulated haptic feedback
-                    animateGlow(markCompleteBtn); // Additional glow for completion
-                    animateCompletionCheck(); // Pulse animation for checkmark
-                }
-            });
-            
-            // Theme toggle
-            themeToggleBtn.addEventListener('click', toggleTheme);
-            
-            // Set initial theme icon based on system preference
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.body.classList.add('dark');
-                sunIcon.classList.remove('hidden');
-                moonIcon.classList.add('hidden');
-            } else {
-                document.body.classList.remove('dark');
-                sunIcon.classList.add('hidden');
-                moonIcon.classList.remove('hidden');
+        function loadPreferences() {
+            const savedSpeed = localStorage.getItem('playbackSpeed');
+            const savedVolume = localStorage.getItem('volume');
+            const savedCompleted = localStorage.getItem('completedLessons');
+            if (savedSpeed) {
+                playbackSpeed = parseFloat(savedSpeed);
+                speedText.textContent = `${playbackSpeed}x`;
+            }
+            if (savedVolume) {
+                volumeSlider.value = savedVolume;
+                adjustVolume();
+            }
+            if (savedCompleted) {
+                completedLessons = new Set(JSON.parse(savedCompleted));
             }
         }
-        
-        /**
-         * Sets up speech synthesis utterance for the current lesson text.
-         */
+
+        function populateLessonList() {
+            lessonList.innerHTML = courseContent.map((lesson, index) => `
+                <li>
+                    <button class="w-full text-left px-3 py-2 rounded-md text-sm font-medium ${currentLessonIndex === index ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-800'} transition-colors animate-slide-up" style="animation-delay: ${index * 0.1}s" data-lesson-index="${index}" aria-label="Go to lesson ${lesson.title}">
+                        ${completedLessons.has(index) ? '<i data-lucide="check-circle" class="inline-block mr-2 text-green-500"></i>' : ''}
+                        ${lesson.title}
+                    </button>
+                </li>
+            `).join('');
+            lucide.createIcons();
+            document.querySelectorAll('#lesson-list button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentLessonIndex = parseInt(btn.dataset.lessonIndex);
+                    loadLesson(currentLessonIndex);
+                    animateButtonPress(btn);
+                    populateLessonList();
+                });
+            });
+        }
+
+        function updateProgressBar() {
+            const progress = courseContent.length ? (completedLessons.size / courseContent.length) * 100 : 0;
+            if (progressBarVisual && progressText) {
+                progressBarVisual.style.width = `${progress}%`;
+                progressText.textContent = `${Math.round(progress)}% Complete`;
+            } else {
+                console.error('Progress bar elements not found');
+            }
+        }
+
         function setupAudioUtterance() {
             if (speechUtterance) {
-                window.speechSynthesis.cancel(); // Stop any ongoing speech
+                window.speechSynthesis.cancel();
             }
             speechUtterance = new SpeechSynthesisUtterance(courseContent[currentLessonIndex].text);
             speechUtterance.rate = playbackSpeed;
-            speechUtterance.volume = volumeSlider.value;
-            
-            // Update time display and progress bar as speech progresses
+            speechUtterance.volume = parseFloat(volumeSlider.value);
             speechUtterance.addEventListener('boundary', (event) => {
                 if (event.name === 'word') {
                     const progress = (event.charIndex / speechUtterance.text.length) * 100;
                     progressBar.value = progress;
-                    
-                    // Estimate current time based on progress and total duration
                     const totalDuration = estimateSpeechDuration(speechUtterance.text) / playbackSpeed;
                     const currentTime = (progress / 100) * totalDuration;
                     currentTimeEl.textContent = formatTime(currentTime);
                 }
             });
-            
-            // When speech ends
             speechUtterance.addEventListener('end', () => {
                 isSpeaking = false;
                 speechPaused = false;
@@ -641,48 +554,35 @@ function setupEventListeners() {
                 progressBar.value = 0;
                 currentTimeEl.textContent = '0:00';
             });
-            
-            // Set total duration
             const duration = estimateSpeechDuration(speechUtterance.text) / playbackSpeed;
             durationEl.textContent = formatTime(duration);
         }
 
-        /**
-         * Switches between content modalities (Text, Audio, Video).
-         * @param {string} modality The modality to switch to ('text', 'audio', 'video').
-         */
         function switchModality(modality) {
-            // Update tabs visually
             modalityTabs.forEach(tab => {
                 if (tab.dataset.modality === modality) {
-                    tab.classList.add('text-indigo-600', 'border-indigo-600');
+                    tab.classList.add('text-indigo-600', 'border-indigo-600', 'active');
                     tab.classList.remove('text-gray-500', 'hover:text-indigo-600');
                     tab.setAttribute('aria-selected', 'true');
                 } else {
-                    tab.classList.remove('text-indigo-600', 'border-indigo-600');
+                    tab.classList.remove('text-indigo-600', 'border-indigo-600', 'active');
                     tab.classList.add('text-gray-500', 'hover:text-indigo-600');
                     tab.setAttribute('aria-selected', 'false');
                 }
             });
-            
-            // Hide all content areas and show the selected one with animation
             modalityContents.forEach(content => {
                 if (content.id === `${modality}-content`) {
                     content.classList.remove('hidden');
                     content.classList.add('animate-fade-in');
                     content.setAttribute('aria-hidden', 'false');
-
-                    // Special handling for each modality when it becomes active
                     if (modality === 'audio') {
-                        setupAudioUtterance(); // Re-initialize utterance for current text
+                        setupAudioUtterance();
                     } else if (modality === 'video') {
-                        // When switching to video, ensure it's paused and reset
                         videoElement.pause();
                         videoElement.currentTime = 0;
                         videoPlayIcon.setAttribute('data-lucide', 'play');
                         lucide.createIcons();
                     } else if (modality === 'text') {
-                        // When switching to text, ensure audio and video are stopped
                         if (window.speechSynthesis.speaking || window.speechSynthesis.paused) {
                             window.speechSynthesis.cancel();
                             isSpeaking = false;
@@ -702,69 +602,52 @@ function setupEventListeners() {
                 }
             });
         }
-        
-        /**
-         * Toggles audio playback (play/pause/resume).
-         */
+
         function toggleAudioPlayback() {
             if (!isSpeaking && !speechPaused) {
-                // Start playing
-                setupAudioUtterance(); // Ensure utterance is fresh for current text and speed
+                setupAudioUtterance();
                 window.speechSynthesis.speak(speechUtterance);
                 isSpeaking = true;
                 speechPaused = false;
                 playIcon.setAttribute('data-lucide', 'pause');
-                
-                // Simulate haptic feedback for primary action
                 animateButtonPress(playAudioBtn);
                 animateGlow(playAudioBtn);
             } else if (isSpeaking && !speechPaused) {
-                // Pause
                 window.speechSynthesis.pause();
                 isSpeaking = false;
                 speechPaused = true;
                 playIcon.setAttribute('data-lucide', 'play');
             } else if (!isSpeaking && speechPaused) {
-                // Resume
                 window.speechSynthesis.resume();
                 isSpeaking = true;
                 speechPaused = false;
                 playIcon.setAttribute('data-lucide', 'pause');
             }
-            lucide.createIcons(); // Re-render Lucide icon
+            lucide.createIcons();
         }
-        
-        /**
-         * Toggles volume mute/unmute for audio.
-         */
+
         function toggleMute() {
-            animateButtonPress(volumeBtn); // Simulated haptic feedback
+            animateButtonPress(volumeBtn);
             if (volumeSlider.value > 0) {
-                // Mute
-                volumeSlider.dataset.prevVolume = volumeSlider.value; // Store current volume
+                volumeSlider.dataset.prevVolume = volumeSlider.value;
                 volumeSlider.value = 0;
                 volumeIcon.setAttribute('data-lucide', 'volume-x');
                 if (speechUtterance) {
                     speechUtterance.volume = 0;
                 }
             } else {
-                // Unmute
-                const prevVolume = volumeSlider.dataset.prevVolume || 0.7; // Default to 0.7 if no previous volume
+                const prevVolume = volumeSlider.dataset.prevVolume || 0.7;
                 volumeSlider.value = prevVolume;
-                volumeIcon.setAttribute('data-lucide', 'volume-2'); // Default icon for unmuted
+                volumeIcon.setAttribute('data-lucide', 'volume-2');
                 if (speechUtterance) {
                     speechUtterance.volume = parseFloat(prevVolume);
                 }
             }
-            lucide.createIcons(); // Re-render Lucide icon based on new attribute
+            lucide.createIcons();
         }
-        
-        /**
-         * Adjusts the volume of the speech synthesis.
-         */
+
         function adjustVolume() {
             const volume = parseFloat(volumeSlider.value);
-            
             if (volume === 0) {
                 volumeIcon.setAttribute('data-lucide', 'volume-x');
             } else if (volume < 0.5) {
@@ -772,84 +655,69 @@ function setupEventListeners() {
             } else {
                 volumeIcon.setAttribute('data-lucide', 'volume-2');
             }
-            
             if (speechUtterance) {
                 speechUtterance.volume = volume;
             }
-            lucide.createIcons(); // Re-render Lucide icon based on new attribute
+            lucide.createIcons();
         }
-        
-        /**
-         * Cycles through different playback speeds for audio.
-         */
+
         function changePlaybackSpeed() {
-            const speeds = [0.75, 1, 1.25, 1.5, 2]; // Removed 0.5 for smoother cycling, start higher
+            const speeds = [0.75, 1, 1.25, 1.5, 2];
             const currentIndex = speeds.indexOf(playbackSpeed);
             const nextIndex = (currentIndex + 1) % speeds.length;
             playbackSpeed = speeds[nextIndex];
             speedText.textContent = `${playbackSpeed}x`;
-            
             if (speechUtterance) {
                 speechUtterance.rate = playbackSpeed;
-                
-                // If currently speaking, stop and restart with new speed
                 if (isSpeaking) {
                     window.speechSynthesis.cancel();
                     window.speechSynthesis.speak(speechUtterance);
                 }
             }
-            animateButtonPress(speedBtn); // Simulated haptic feedback
+            animateButtonPress(speedBtn);
+            savePreferences();
         }
-        
-        /**
-         * Toggles video playback (play/pause).
-         */
+
         function toggleVideoPlayback() {
             if (videoElement.paused) {
                 videoElement.play();
                 videoPlayIcon.setAttribute('data-lucide', 'pause');
-                animateButtonPress(playVideoBtn); // Simulated haptic feedback
+                animateButtonPress(playVideoBtn);
             } else {
                 videoElement.pause();
                 videoPlayIcon.setAttribute('data-lucide', 'play');
             }
-            lucide.createIcons(); // Re-render Lucide icon
+            lucide.createIcons();
         }
-        
-        /**
-         * Toggles fullscreen mode for the video element.
-         */
+
         function toggleFullscreen() {
-            animateButtonPress(fullscreenVideoBtn); // Simulated haptic feedback
+            animateButtonPress(fullscreenVideoBtn);
             if (!document.fullscreenElement) {
                 if (videoElement.requestFullscreen) {
                     videoElement.requestFullscreen().catch(err => {
                         console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
                     });
-                } else if (videoElement.webkitRequestFullscreen) { /* Safari */
+                } else if (videoElement.webkitRequestFullscreen) {
                     videoElement.webkitRequestFullscreen();
-                } else if (videoElement.msRequestFullscreen) { /* IE11 */
+                } else if (videoElement.msRequestFullscreen) {
                     videoElement.msRequestFullscreen();
                 }
                 fullscreenVideoBtn.querySelector('[data-lucide]').setAttribute('data-lucide', 'minimize');
             } else {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) { /* Safari */
+                } else if (document.webkitExitFullscreen) {
                     document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) { /* Firefox */
+                } else if (document.mozCancelFullScreen) {
                     document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) { /* IE11 */
+                } else if (document.msExitFullscreen) {
                     document.msExitFullscreen();
                 }
                 fullscreenVideoBtn.querySelector('[data-lucide]').setAttribute('data-lucide', 'maximize');
             }
-            lucide.createIcons(); // Re-render Lucide icon
+            lucide.createIcons();
         }
 
-        /**
-         * Toggles between light and dark themes.
-         */
         function toggleTheme() {
             document.body.classList.toggle('dark');
             const isDarkMode = document.body.classList.contains('dark');
@@ -860,222 +728,205 @@ function setupEventListeners() {
                 sunIcon.classList.add('hidden');
                 moonIcon.classList.remove('hidden');
             }
-            animateButtonPress(themeToggleBtn); // Simulated haptic feedback
-            lucide.createIcons(); // Re-render Lucide icons
+            animateButtonPress(themeToggleBtn);
+            lucide.createIcons();
         }
-        // Track completed lessons
-let completedLessons = new Set();
 
-// Local storage for user preferences
-function savePreferences() {
-    localStorage.setItem('playbackSpeed', playbackSpeed);
-    localStorage.setItem('volume', volumeSlider.value);
-    localStorage.setItem('completedLessons', JSON.stringify([...completedLessons]));
-}
+        function showOnboarding() {
+            if (!localStorage.getItem('onboardingShown')) {
+                const steps = [
+                    { element: '#lesson-title', message: 'Switch between lessons using Previous/Next buttons or the sidebar.' },
+                    { element: '.modality-tab[data-modality="text"]', message: 'Choose your preferred learning mode: Text, Audio, or Sign Language.' },
+                    { element: '#mark-complete', message: 'Mark lessons as complete to track your progress.' },
+                    { element: '#theme-toggle', message: 'Toggle dark mode for comfortable viewing.' }
+                ];
+                let currentStep = 0;
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md animate-fade-in">
+                        <p id="onboarding-message" class="text-gray-700 dark:text-gray-300 mb-4"></p>
+                        <div class="flex justify-between">
+                            <button id="onboarding-prev" class="text-indigo-600 dark:text-indigo-400">Previous</button>
+                            <button id="onboarding-next" class="btn-primary px-4 py-2 rounded-md">Next</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                const messageEl = modal.querySelector('#onboarding-message');
+                const prevBtn = modal.querySelector('#onboarding-prev');
+                const nextBtn = modal.querySelector('#onboarding-next');
 
-function loadPreferences() {
-    const savedSpeed = localStorage.getItem('playbackSpeed');
-    const savedVolume = localStorage.getItem('volume');
-    const savedCompleted = localStorage.getItem('completedLessons');
-    if (savedSpeed) {
-        playbackSpeed = parseFloat(savedSpeed);
-        speedText.textContent = `${playbackSpeed}x`;
-    }
-    if (savedVolume) {
-        volumeSlider.value = savedVolume;
-        adjustVolume();
-    }
-    if (savedCompleted) {
-        completedLessons = new Set(JSON.parse(savedCompleted));
-    }
-}
+                function showStep(index) {
+                    const step = steps[index];
+                    messageEl.textContent = step.message;
+                    const target = document.querySelector(step.element);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                        target.classList.add('animate-glow');
+                    }
+                    prevBtn.disabled = index === 0;
+                    nextBtn.textContent = index === steps.length - 1 ? 'Finish' : 'Next';
+                }
 
-// Populate lesson sidebar
-function populateLessonList() {
-    const lessonList = document.getElementById('lesson-list');
-    lessonList.innerHTML = courseContent.map((lesson, index) => `
-        <li>
-            <button class="w-full text-left px-3 py-2 rounded-md text-sm font-medium ${currentLessonIndex === index ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-800'} transition-colors animate-slide-up" style="animation-delay: ${index * 0.1}s" data-lesson-index="${index}" aria-label="Go to lesson ${lesson.title}">
-                ${completedLessons.has(index) ? '<i data-lucide="check-circle" class="inline-block mr-2 text-green-500"></i>' : ''}
-                ${lesson.title}
-            </button>
-        </li>
-    `).join('');
-    lucide.createIcons();
-    // Add event listeners to lesson buttons
-    document.querySelectorAll('#lesson-list button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            currentLessonIndex = parseInt(btn.dataset.lessonIndex);
-            loadLesson(currentLessonIndex);
-            animateButtonPress(btn);
-            populateLessonList(); // Refresh to show active lesson
-        });
-    });
-}
+                prevBtn.addEventListener('click', () => {
+                    if (currentStep > 0) {
+                        document.querySelector(steps[currentStep].element)?.classList.remove('animate-glow');
+                        currentStep--;
+                        showStep(currentStep);
+                    }
+                });
 
-// Update progress bar
-function updateProgressBar() {
-    const progress = (completedLessons.size / courseContent.length) * 100;
-    document.getElementById('progress-bar-visual').style.width = `${progress}%`;
-    document.getElementById('progress-text').textContent = `${Math.round(progress)}% Complete`;
-}
+                nextBtn.addEventListener('click', () => {
+                    document.querySelector(steps[currentStep].element)?.classList.remove('animate-glow');
+                    if (currentStep < steps.length - 1) {
+                        currentStep++;
+                        showStep(currentStep);
+                    } else {
+                        modal.remove();
+                        localStorage.setItem('onboardingShown', 'true');
+                    }
+                });
 
-// Simple onboarding tour
-function showOnboarding() {
-    if (!localStorage.getItem('onboardingShown')) {
-        const steps = [
-            { element: '#lesson-title', message: 'Switch between lessons using Previous/Next buttons or the sidebar.' },
-            { element: '.modality-tab[data-modality="text"]', message: 'Choose your preferred learning mode: Text, Audio, or Sign Language.' },
-            { element: '#mark-complete', message: 'Mark lessons as complete to track your progress.' },
-            { element: '#theme-toggle', message: 'Toggle dark mode for comfortable viewing.' }
-        ];
-        let currentStep = 0;
-        const modal = document.createElement('div');
-        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-        modal.innerHTML = `
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md animate-fade-in">
-                <p id="onboarding-message" class="text-gray-700 dark:text-gray-300 mb-4"></p>
-                <div class="flex justify-between">
-                    <button id="onboarding-prev" class="text-indigo-600 dark:text-indigo-400">Previous</button>
-                    <button id="onboarding-next" class="btn-primary px-4 py-2 rounded-md">Next</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        const messageEl = modal.querySelector('#onboarding-message');
-        const prevBtn = modal.querySelector('#onboarding-prev');
-        const nextBtn = modal.querySelector('#onboarding-next');
+                showStep(0);
+            }
+        }
 
-        function showStep(index) {
-            const step = steps[index];
-            messageEl.textContent = step.message;
-            const target = document.querySelector(step.element);
-            target.scrollIntoView({ behavior: 'smooth' });
-            target.classList.add('animate-glow');
-            prevBtn.disabled = index === 0;
-            if (index === steps.length - 1) {
-                nextBtn.textContent = 'Finish';
+        // tsParticles initialization (optional)
+        function initParticles() {
+            tsParticles.load('tsparticles', {
+                particles: {
+                    number: { value: 50 },
+                    color: { value: ['#4f46e5', '#2dd4bf'] },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.5 },
+                    size: { value: { min: 1, max: 3 } },
+                    move: { enable: true, speed: 0.5, direction: 'none', random: true }
+                },
+                interactivity: {
+                    events: { onHover: { enable: true, mode: 'repulse' } },
+                    modes: { repulse: { distance: 100 } }
+                },
+                background: { color: 'transparent' }
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            prevLessonBtn.addEventListener('click', () => {
+                if (currentLessonIndex > 0) {
+                    currentLessonIndex--;
+                    loadLesson(currentLessonIndex);
+                    animateButtonPress(prevLessonBtn);
+                    populateLessonList();
+                    updateProgressBar();
+                }
+            });
+
+            nextLessonBtn.addEventListener('click', () => {
+                if (currentLessonIndex < courseContent.length - 1) {
+                    currentLessonIndex++;
+                    loadLesson(currentLessonIndex);
+                    animateButtonPress(nextLessonBtn);
+                    populateLessonList();
+                    updateProgressBar();
+                }
+            });
+
+            modalityTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const modality = tab.dataset.modality;
+                    switchModality(modality);
+                    animateButtonPress(tab);
+                });
+            });
+
+            playAudioBtn.addEventListener('click', toggleAudioPlayback);
+            volumeBtn.addEventListener('click', toggleMute);
+            volumeSlider.addEventListener('input', adjustVolume);
+            speedBtn.addEventListener('click', changePlaybackSpeed);
+            playVideoBtn.addEventListener('click', toggleVideoPlayback);
+            fullscreenVideoBtn.addEventListener('click', toggleFullscreen);
+
+            if (pipVideoBtn) {
+                pipVideoBtn.addEventListener('click', async () => {
+                    try {
+                        if (document.pictureInPictureElement) {
+                            await document.exitPictureInPicture();
+                            pipVideoBtn.querySelector('[data-lucide]').setAttribute('data-lucide', 'picture-in-picture');
+                        } else {
+                            await videoElement.requestPictureInPicture();
+                            animateButtonPress(pipVideoBtn);
+                            pipVideoBtn.querySelector('[data-lucide]').setAttribute('data-lucide', 'picture-in-picture-2');
+                        }
+                        lucide.createIcons();
+                    } catch (err) {
+                        console.error(`Error toggling Picture-in-Picture: ${err.message}`);
+                    }
+                });
+            }
+
+            markCompleteBtn.addEventListener('click', () => {
+                if (completedLessons.has(currentLessonIndex)) {
+                    completedLessons.delete(currentLessonIndex);
+                    completionCheck.classList.add('hidden');
+                    markCompleteBtn.textContent = 'Mark as Complete';
+                    markCompleteBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    markCompleteBtn.classList.add('btn-primary');
+                } else {
+                    completedLessons.add(currentLessonIndex);
+                    completionCheck.classList.remove('hidden');
+                    markCompleteBtn.textContent = 'Completed';
+                    markCompleteBtn.classList.remove('btn-primary');
+                    markCompleteBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                    animateButtonPress(markCompleteBtn);
+                    animateGlow(markCompleteBtn);
+                    animateCompletionCheck();
+                }
+                savePreferences();
+                populateLessonList();
+                updateProgressBar();
+            });
+
+            themeToggleBtn.addEventListener('click', toggleTheme);
+
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
             } else {
-                nextBtn.textContent = 'Next';
+                document.body.classList.remove('dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
             }
+
+            videoElement.addEventListener('play', () => {
+                videoPlayIcon.setAttribute('data-lucide', 'pause');
+                lucide.createIcons();
+            });
+
+            videoElement.addEventListener('pause', () => {
+                videoPlayIcon.setAttribute('data-lucide', 'play');
+                lucide.createIcons();
+            });
         }
 
-        prevBtn.addEventListener('click', () => {
-            if (currentStep > 0) {
-                document.querySelector(steps[currentStep].element).classList.remove('animate-glow');
-                currentStep--;
-                showStep(currentStep);
-            }
-        });
-
- }
-
-        nextBtn.addEventListener('click', () => {
-            document.querySelector(steps[currentStep].element).classList.remove('animate-glow');
-            if (currentStep < steps.length - 1) {
-                currentStep++;
-                showStep(currentStep);
-            } else {
-                modal.remove();
-                localStorage.setItem('onboardingShown', 'true');
-            }
-        });
-
-        showStep(0);
-    }
-}
-
-// Update mark complete button
-markCompleteBtn.addEventListener('click', () => {
-    if (completedLessons.has(currentLessonIndex)) {
-        completedLessons.delete(currentLessonIndex);
-        completionCheck.classList.add('hidden');
-        markCompleteBtn.textContent = 'Mark as Complete';
-        markCompleteBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
-        markCompleteBtn.classList.add('btn-primary');
-    } else {
-        completedLessons.add(currentLessonIndex);
-        completionCheck.classList.remove('hidden');
-        markCompleteBtn.textContent = 'Completed';
-        markCompleteBtn.classList.remove('btn-primary');
-        markCompleteBtn.classList.add('bg-green-600', 'hover:bg-green-700');
-        animateButtonPress(markCompleteBtn);
-        animateGlow(markCompleteBtn);
-        animateCompletionCheck();
-    }
-    savePreferences();
-    populateLessonList();
-    updateProgressBar();
-});
-
-// Picture-in-Picture for video
-document.getElementById('pip-video').addEventListener('click', async () => {
-    try {
-        if (document.pictureInPictureElement) {
-            await document.exitPictureInPicture();
-        } else {
-            await videoElement.requestPictureInPicture();
-            animateButtonPress(document.getElementById('pip-video'));
-        }
-    } catch (err) {
-        console.error(`Error toggling Picture-in-Picture: ${err.message}`);
-    }
-});
-
-// Update loadLesson to reflect completion status
-function loadLesson(index) {
-    const lesson = courseContent[index];
-    lessonTitle.textContent = lesson.title;
-    lessonText.innerHTML = lesson.text.split('\n\n').map((p, i) => `<p class="mb-4 animate-slide-up" style="animation-delay: ${i * 0.1}s;">${p}</p>`).join('');
-    videoElement.src = lesson.videoUrl;
-    videoElement.load();
-    prevLessonBtn.disabled = index === 0;
-    nextLessonBtn.disabled = index === courseContent.length - 1;
-    completionCheck.classList.toggle('hidden', !completedLessons.has(index));
-    markCompleteBtn.textContent = completedLessons.has(index) ? 'Completed' : 'Mark as Complete';
-    markCompleteBtn.classList.toggle('bg-green-600', completedLessons.has(index));
-    markCompleteBtn.classList.toggle('hover:bg-green-700', completedLessons.has(index));
-    markCompleteBtn.classList.toggle('btn-primary', !completedLessons.has(index));
-    if (window.speechSynthesis.speaking || window.speechSynthesis.paused) {
-        window.speechSynthesis.cancel();
-    }
-    isSpeaking = false;
-    speechPaused = false;
-    playIcon.setAttribute('data-lucide', 'play');
-    lucide.createIcons();
-    progressBar.value = 0;
-    currentTimeEl.textContent = '0:00';
-    videoElement.pause();
-    videoElement.currentTime = 0;
-    videoPlayIcon.setAttribute('data-lucide', 'play');
-    lucide.createIcons();
-    switchModality('text');
-    lessonProgressText.textContent = `Lesson ${index + 1} of ${courseContent.length}`;
-    populateLessonList();
-    updateProgressBar();
-}
-
-// Initialize app
-function initApp() {
-    loadPreferences();
-    loadLesson(currentLessonIndex);
-    setupEventListeners();
-    setupAudioUtterance();
-    populateLessonList();
-    updateProgressBar();
-    showOnboarding();
-}
-
-        // Initialize the app when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', initApp);
-
+        // Initialize app
         function initApp() {
+            loadPreferences();
             loadLesson(currentLessonIndex);
             setupEventListeners();
-            // Initial setup of the audio utterance for the first lesson
-            setupAudioUtterance(); 
+            setupAudioUtterance();
+            populateLessonList();
+            updateProgressBar();
+            showOnboarding();
+            if (typeof tsParticles !== 'undefined') {
+                initParticles();
+            }
         }
-        <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/dist/tsparticles.min.js"></script>
+
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
