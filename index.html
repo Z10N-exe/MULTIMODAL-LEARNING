@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/dist/tsparticles.min.js"></script>
+    <link rel="stylesheet" href="css/custom.css">
     <style>
         /* Custom fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -81,35 +82,87 @@
         /* Accessibility */
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
         video::-webkit-media-text-track-display { font-size: 1.2rem; background: rgba(0, 0, 0, 0.7); color: #fff; }
+
+        @media (max-width: 768px) {
+            .sidebar-mobile {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 80vw;
+                height: 100vh;
+                background: #fff;
+                z-index: 50;
+                box-shadow: 2px 0 16px rgba(0,0,0,0.07);
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+            .sidebar-mobile.open {
+                transform: translateX(0);
+            }
+            .overlay {
+                position: fixed;
+                top: 0; left: 0; width: 100vw; height: 100vh;
+                background: rgba(0,0,0,0.2);
+                z-index: 40;
+                display: none;
+            }
+            .overlay.open {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased text-gray-800">
     <a href="#main-content" class="fixed top-0 left-0 p-2 bg-indigo-600 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 z-50 sr-only focus:not-sr-only">Skip to main content</a>
     <div id="tsparticles" class="fixed inset-0 z-[-1]"></div>
     <div class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <header class="bg-indigo-600 text-white shadow-md">
-            <div class="container mx-auto px-4 py-6 flex justify-between items-center">
-                <h1 class="text-2xl md:text-3xl font-bold flex items-center">
-                    <i data-lucide="book-open" class="mr-2"></i>
-                    Multi-Modal Learning
-                </h1>
-                <nav class="flex items-center space-x-6">
-                    <a href="index.html" class="hover:text-teal-200 font-medium transition-colors">Home</a>
-                    <a href="lessons.html" class="hover:text-teal-200 font-medium transition-colors">Lessons</a>
-                    <a href="about.html" class="hover:text-teal-200 font-medium transition-colors">About</a>
-                    <a href="contact.html" class="hover:text-teal-200 font-medium transition-colors">Contact</a>
-                    <a href="tutor.html" class="hover:text-teal-200 font-medium transition-colors" aria-label="Tutor Dashboard">Tutor Dashboard</a>
+        <!-- Mobile Header -->
+        <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-30">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="flex items-center">
+                    <button id="sidebar-toggle" class="md:hidden mr-2 p-2 rounded hover:bg-indigo-500 focus:outline-none" aria-label="Open sidebar">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <h1 class="text-xl md:text-2xl font-bold flex items-center">
+                        <i data-lucide="book-open" class="mr-2"></i>
+                        Multi-Modal Learning
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <a href="tutor.html" class="hidden md:inline text-white hover:text-teal-200 font-medium" aria-label="Tutor Dashboard">Tutor Dashboard</a>
                     <button id="theme-toggle" class="p-2 rounded-full hover:bg-indigo-500 transition-colors" aria-label="Toggle dark mode">
                         <i data-lucide="sun" class="hidden dark-icon"></i>
                         <i data-lucide="moon" class="light-icon"></i>
                     </button>
-                </nav>
+                </div>
             </div>
         </header>
 
-        <main id="main-content" class="flex-grow container mx-auto px-4 py-8 flex">
-            <!-- Sidebar -->
+        <!-- Mobile Sidebar -->
+        <div id="sidebar-mobile" class="sidebar-mobile md:hidden">
+            <div class="p-6">
+                <button id="sidebar-close" class="mb-4 p-2 rounded hover:bg-indigo-100" aria-label="Close sidebar">
+                    <i data-lucide="x"></i>
+                </button>
+                <h3 class="text-lg font-semibold mb-4 text-indigo-700">Lessons</h3>
+                <ul id="lesson-list-mobile" class="space-y-2"></ul>
+                <div class="mt-6">
+                    <h4 class="text-sm font-medium text-gray-600">Progress</h4>
+                    <div class="relative pt-1">
+                        <div class="flex mb-2 items-center justify-between">
+                            <span class="text-xs font-medium text-indigo-600" id="progress-text-mobile">0% Complete</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="progress-bar-visual-mobile" class="bg-gradient-to-r from-indigo-600 to-teal-500 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="overlay" class="overlay"></div>
+
+        <main id="main-content" class="flex-grow container mx-auto px-2 md:px-4 py-4 md:py-8 flex flex-col md:flex-row">
+            <!-- Desktop Sidebar -->
             <aside class="w-64 mr-6 hidden md:block">
                 <div class="card p-4 sticky top-8">
                     <h3 class="text-lg font-semibold mb-4 text-indigo-700 dark:text-indigo-400">Lessons</h3>
@@ -129,30 +182,30 @@
             </aside>
 
             <!-- Main Content -->
-            <div class="flex-grow max-w-4xl card">
-                <div class="bg-indigo-50 dark:bg-indigo-900 px-6 py-4 flex justify-between items-center">
-                    <button id="prev-lesson" class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors animate-bounce" disabled aria-label="Previous Lesson">
+            <div class="flex-grow max-w-4xl card mt-4 md:mt-0">
+                <div class="bg-indigo-50 dark:bg-indigo-900 px-4 md:px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+                    <button id="prev-lesson" class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors animate-bounce mb-2 md:mb-0" disabled aria-label="Previous Lesson">
                         <i data-lucide="chevron-left" class="mr-1"></i> Previous
                     </button>
-                    <h2 class="text-lg md:text-xl font-semibold text-center text-indigo-700 dark:text-indigo-400" id="lesson-title">Introduction to Multi-Modal Learning</h2>
-                    <button id="next-lesson" class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors animate-bounce" aria-label="Next Lesson">
+                    <h2 class="text-lg md:text-xl font-semibold text-center text-indigo-700 dark:text-indigo-400 flex-1" id="lesson-title">Introduction to Multi-Modal Learning</h2>
+                    <button id="next-lesson" class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors animate-bounce mt-2 md:mt-0" aria-label="Next Lesson">
                         Next <i data-lucide="chevron-right" class="ml-1"></i>
                     </button>
                 </div>
 
-                <div class="flex border-b-2 border-gray-200 dark:border-gray-600">
-                    <button class="modality-tab flex-1 py-4 px-2 text-center font-medium text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 active transition-colors" data-modality="text" aria-controls="text-content" aria-selected="true">
+                <div class="flex flex-col md:flex-row border-b-2 border-gray-200 dark:border-gray-600">
+                    <button class="modality-tab flex-1 py-3 px-2 text-center font-medium text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 active transition-colors" data-modality="text" aria-controls="text-content" aria-selected="true">
                         <i data-lucide="text" class="inline-block mr-2"></i> Text
                     </button>
-                    <button class="modality-tab flex-1 py-4 px-2 text-center font-medium text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-modality="audio" aria-controls="audio-content" aria-selected="false">
+                    <button class="modality-tab flex-1 py-3 px-2 text-center font-medium text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-modality="audio" aria-controls="audio-content" aria-selected="false">
                         <i data-lucide="headphones" class="inline-block mr-2"></i> Audio
                     </button>
-                    <button class="modality-tab flex-1 py-4 px-2 text-center font-medium text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-modality="video" aria-controls="video-content" aria-selected="false">
+                    <button class="modality-tab flex-1 py-3 px-2 text-center font-medium text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-modality="video" aria-controls="video-content" aria-selected="false">
                         <i data-lucide="video" class="inline-block mr-2"></i> Sign Language
                     </button>
                 </div>
 
-                <div class="p-6">
+                <div class="p-4 md:p-6">
                     <div id="text-content" class="modality-content animate-fade-in" role="tabpanel" aria-labelledby="text-tab" aria-hidden="false">
                         <div class="prose max-w-none">
                             <p id="lesson-text" class="text-gray-700 dark:text-gray-300 mb-4 animate-slide-up"></p>
@@ -160,7 +213,7 @@
                     </div>
 
                     <div id="audio-content" class="modality-content hidden" role="tabpanel" aria-labelledby="audio-tab" aria-hidden="true">
-                        <div class="bg-indigo-50 dark:bg-indigo-900 rounded-lg p-6 animate-fade-in">
+                        <div class="bg-indigo-50 dark:bg-indigo-900 rounded-lg p-4 md:p-6 animate-fade-in">
                             <div class="flex flex-col items-center">
                                 <button id="play-audio" class="btn-primary rounded-full p-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors mb-4" aria-label="Play or pause audio">
                                     <i data-lucide="play" id="play-icon"></i>
@@ -193,11 +246,11 @@
                                 Your browser does not support the video tag.
                             </video>
                         </div>
-                        <div class="mt-4 flex justify-between items-center">
-                            <button id="play-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce" aria-label="Play or pause video">
+                        <div class="mt-4 flex flex-col md:flex-row justify-between items-center">
+                            <button id="play-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce mb-2 md:mb-0" aria-label="Play or pause video">
                                 <i data-lucide="play" id="video-play-icon" class="mr-2"></i> Play
                             </button>
-                            <button id="pip-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce" aria-label="Toggle Picture-in-Picture">
+                            <button id="pip-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce mb-2 md:mb-0" aria-label="Toggle Picture-in-Picture">
                                 <i data-lucide="picture-in-picture" class="mr-2"></i> PiP
                             </button>
                             <button id="fullscreen-video" class="flex items-center text-indigo-600 hover:text-indigo-800 dark:hover:text-indigo-400 font-medium transition-colors animate-bounce" aria-label="Toggle fullscreen video">
@@ -207,9 +260,9 @@
                     </div>
                 </div>
 
-                <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
+                <div class="px-4 md:px-6 py-4 border-t border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+                    <div class="flex flex-col md:flex-row items-center justify-between">
+                        <div class="flex items-center mb-2 md:mb-0">
                             <div class="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
                                 <i data-lucide="check" class="text-indigo-600 dark:text-indigo-400 hidden" id="completion-check"></i>
                             </div>
@@ -223,21 +276,13 @@
             </div>
         </main>
 
-        <!-- Add a floating help button for accessibility -->
-        <button id="help-btn" class="fixed bottom-6 right-6 z-50 bg-teal-500 text-white rounded-full p-4 shadow-lg hover:bg-teal-600 transition-colors" aria-label="Help">
-            <i data-lucide="help-circle"></i>
-        </button>
-
         <footer class="bg-gray-100 border-t border-gray-200 py-6">
-            <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+            <div class="container mx-auto px-2 md:px-4 text-center text-gray-500 text-sm">
                 <p>© 2025 DEPARTMENT OF INFORMATION TECHNOLOGY. All rights reserved.</p>
-                <div class="mt-2 flex justify-center space-x-4">
+                <div class="mt-2 flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-4">
                     <a href="#" class="hover:text-indigo-600 transition-colors">Accessibility</a>
                     <a href="#" class="hover:text-indigo-600 transition-colors">Privacy Policy</a>
                     <a href="#" class="hover:text-indigo-600 transition-colors">Terms of Service</a>
-                </div>
-                <div class="mt-2">
-                    <span class="text-xs">Need help? <a href="contact.html" class="text-teal-600 hover:underline">Contact Support</a></span>
                 </div>
             </div>
         </footer>
@@ -245,29 +290,30 @@
 
     <script src="js/main.js"></script>
     <script>
-        // Theme toggle
-        document.getElementById('theme-toggle').addEventListener('click', function() {
-            document.body.classList.toggle('dark');
+        // Mobile sidebar toggle
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarMobile = document.getElementById('sidebar-mobile');
+        const sidebarClose = document.getElementById('sidebar-close');
+        const overlay = document.getElementById('overlay');
+        sidebarToggle.addEventListener('click', () => {
+            sidebarMobile.classList.add('open');
+            overlay.classList.add('open');
         });
-
-        // Help button
-        document.getElementById('help-btn').addEventListener('click', function() {
-            alert('Need help? Visit the About or Contact page for support.');
+        sidebarClose.addEventListener('click', () => {
+            sidebarMobile.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+        overlay.addEventListener('click', () => {
+            sidebarMobile.classList.remove('open');
+            overlay.classList.remove('open');
         });
 
         // Lucide icons
         lucide.createIcons();
 
-        // Example: Keyboard navigation for tabs
-        document.querySelectorAll('.modality-tab').forEach(tab => {
-            tab.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                    let tabs = Array.from(document.querySelectorAll('.modality-tab'));
-                    let idx = tabs.indexOf(document.activeElement);
-                    let nextIdx = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
-                    tabs[nextIdx].focus();
-                }
-            });
+        // Theme toggle
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark');
         });
     </script>
 </body>
