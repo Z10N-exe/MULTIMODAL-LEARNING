@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tutor dashboard for uploading educational content to Multi-Modal Learning App.">
+    <title>Tutor Dashboard - Multi-Modal Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/custom.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #e0e7ff 0%, #ccfbf1 100%); color: #1f2937; }
+        .card { background: #ffffff; border-radius: 16px; box-shadow: 8px 8px 16px #d1d5db, -8px -8px 16px #ffffff; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card:hover { transform: translateY(-4px); box-shadow: 12px 12px 24px #d1d5db, -12px -12px 24px #ffffff; }
+        body.dark { background: linear-gradient(135deg, #1e3a8a 0%, #134e4a 100%); color: #e2e8f0; }
+        body.dark .card { background: #2d3748; box-shadow: 8px 8px 16px #1f2937, -8px -8px 16px #374151; }
+        .btn-primary { background: linear-gradient(45deg, #4f46e5, #2dd4bf); transition: all 0.3s ease; }
+        .btn-primary:hover { background: linear-gradient(45deg, #4338ca, #14b8a6); transform: translateY(-2px); }
+        .btn-primary:active { transform: scale(0.95); }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .animate-slide-up { animation: slideUp 0.6s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased text-gray-800">
+    <a href="#main-content" class="fixed top-0 left-0 p-2 bg-indigo-600 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 z-50 sr-only focus:not-sr-only">Skip to main content</a>
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-indigo-600 text-white shadow-md">
+            <div class="container mx-auto px-4 py-6">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl md:text-3xl font-bold flex items-center">
+                        <i data-lucide="book-open" class="mr-2"></i>
+                        Tutor Dashboard
+                    </h1>
+                    <div class="flex items-center space-x-4">
+                        <a href="index.html" class="text-white hover:text-teal-200 font-medium" aria-label="Back to Learning">Back to Learning</a>
+                        <button id="theme-toggle" class="p-2 rounded-full hover:bg-indigo-500 transition-colors" aria-label="Toggle dark mode">
+                            <i data-lucide="sun" class="hidden dark-icon"></i>
+                            <i data-lucide="moon" class="light-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main id="main-content" class="flex-grow container mx-auto px-4 py-8">
+            <div class="card p-6">
+                <h2 class="text-xl md:text-2xl font-semibold text-indigo-700 dark:text-indigo-400 mb-6">Upload New Lesson</h2>
+                <form id="lesson-upload-form" class="space-y-6">
+                    <div>
+                        <label for="lesson-title-input" class="block text-gray-700 dark:text-gray-300 font-medium">Lesson Title</label>
+                        <input id="lesson-title-input" type="text" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:border-gray-600 dark:bg-gray-700" required aria-describedby="title-help">
+                        <p id="title-help" class="text-sm text-gray-500 dark:text-gray-400">Enter a concise title for the lesson.</p>
+                    </div>
+                    <div>
+                        <label for="lesson-content-input" class="block text-gray-700 dark:text-gray-300 font-medium">Lesson Content</label>
+                        <textarea id="lesson-content-input" rows="6" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:border-gray-600 dark:bg-gray-700" required aria-describedby="content-help"></textarea>
+                        <p id="content-help" class="text-sm text-gray-500 dark:text-gray-400">Provide the lesson content in text format. It will be converted to audio and Nigerian Sign Language.</p>
+                    </div>
+                    <button type="submit" class="btn-primary px-6 py-3 rounded-md font-medium transition-colors">Upload Lesson</button>
+                </form>
+                <div id="upload-status" class="mt-4 text-gray-600 dark:text-gray-300 hidden"></div>
+            </div>
+            <div class="card p-6 mt-6">
+                <h2 class="text-xl md:text-2xl font-semibold text-indigo-700 dark:text-indigo-400 mb-6">Uploaded Lessons</h2>
+                <ul id="uploaded-lessons" class="space-y-4"></ul>
+            </div>
+        </main>
+
+        <footer class="bg-gray-100 border-t border-gray-200 py-6">
+            <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+                <p>© 2025 DEPARTMENT OF INFORMATION TECHNOLOGY. All rights reserved.</p>
+                <div class="mt-2 flex justify-center space-x-4">
+                    <a href="#" class="hover:text-indigo-600 transition-colors">Accessibility</a>
+                    <a href="#" class="hover:text-indigo-600 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-indigo-600 transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
