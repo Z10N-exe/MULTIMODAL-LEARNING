@@ -89,20 +89,22 @@
     <div class="min-h-screen flex flex-col">
         <!-- Header -->
         <header class="bg-indigo-600 text-white shadow-md">
-            <div class="container mx-auto px-4 py-6">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-2xl md:text-3xl font-bold flex items-center">
-                        <i data-lucide="book-open" class="mr-2"></i>
-                        Multi-Modal Learning
-                    </h1>
-                    <div class="flex items-center space-x-4">
-                        <a href="tutor.html" class="text-white hover:text-teal-200 font-medium" aria-label="Tutor Dashboard">Tutor Dashboard</a>
-                        <button id="theme-toggle" class="p-2 rounded-full hover:bg-indigo-500 transition-colors" aria-label="Toggle dark mode">
-                            <i data-lucide="sun" class="hidden dark-icon"></i>
-                            <i data-lucide="moon" class="light-icon"></i>
-                        </button>
-                    </div>
-                </div>
+            <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+                <h1 class="text-2xl md:text-3xl font-bold flex items-center">
+                    <i data-lucide="book-open" class="mr-2"></i>
+                    Multi-Modal Learning
+                </h1>
+                <nav class="flex items-center space-x-6">
+                    <a href="index.html" class="hover:text-teal-200 font-medium transition-colors">Home</a>
+                    <a href="lessons.html" class="hover:text-teal-200 font-medium transition-colors">Lessons</a>
+                    <a href="about.html" class="hover:text-teal-200 font-medium transition-colors">About</a>
+                    <a href="contact.html" class="hover:text-teal-200 font-medium transition-colors">Contact</a>
+                    <a href="tutor.html" class="hover:text-teal-200 font-medium transition-colors" aria-label="Tutor Dashboard">Tutor Dashboard</a>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-indigo-500 transition-colors" aria-label="Toggle dark mode">
+                        <i data-lucide="sun" class="hidden dark-icon"></i>
+                        <i data-lucide="moon" class="light-icon"></i>
+                    </button>
+                </nav>
             </div>
         </header>
 
@@ -221,6 +223,11 @@
             </div>
         </main>
 
+        <!-- Add a floating help button for accessibility -->
+        <button id="help-btn" class="fixed bottom-6 right-6 z-50 bg-teal-500 text-white rounded-full p-4 shadow-lg hover:bg-teal-600 transition-colors" aria-label="Help">
+            <i data-lucide="help-circle"></i>
+        </button>
+
         <footer class="bg-gray-100 border-t border-gray-200 py-6">
             <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
                 <p>© 2025 DEPARTMENT OF INFORMATION TECHNOLOGY. All rights reserved.</p>
@@ -229,10 +236,39 @@
                     <a href="#" class="hover:text-indigo-600 transition-colors">Privacy Policy</a>
                     <a href="#" class="hover:text-indigo-600 transition-colors">Terms of Service</a>
                 </div>
+                <div class="mt-2">
+                    <span class="text-xs">Need help? <a href="contact.html" class="text-teal-600 hover:underline">Contact Support</a></span>
+                </div>
             </div>
         </footer>
     </div>
 
     <script src="js/main.js"></script>
+    <script>
+        // Theme toggle
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark');
+        });
+
+        // Help button
+        document.getElementById('help-btn').addEventListener('click', function() {
+            alert('Need help? Visit the About or Contact page for support.');
+        });
+
+        // Lucide icons
+        lucide.createIcons();
+
+        // Example: Keyboard navigation for tabs
+        document.querySelectorAll('.modality-tab').forEach(tab => {
+            tab.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                    let tabs = Array.from(document.querySelectorAll('.modality-tab'));
+                    let idx = tabs.indexOf(document.activeElement);
+                    let nextIdx = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+                    tabs[nextIdx].focus();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
