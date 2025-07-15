@@ -12,6 +12,15 @@ let courseContent = [
         audioUrl: null, // Generated dynamically
         videoUrl: "assets/sample-video.mp4",
         captionsUrl: "assets/captions.vtt"
+    },
+    {
+        id: 2,
+        title: "Introduction to Photosynthesis 🌱",
+        text: "Photosynthesis is the process by which plants make food using sunlight.",
+        audioUrl: "assets/photosynthesis.mp3", // generated via TTS API
+        videoUrl: "assets/photosynthesis-sign.mp4", // sign language video
+        captionsUrl: "assets/captions.vtt",
+        emojis: ["🌱", "☀️", "💧"]
     }
 ];
 

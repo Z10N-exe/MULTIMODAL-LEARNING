@@ -94,11 +94,11 @@ body.dark .modality-tab.active {
 
 /* Animations */
 .animate-fade-in {
-    animation: fadeIn 0.6s ease;
+    animation: fadeIn 0.5s ease-out;
 }
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(16px);}
-    to { opacity: 1; transform: translateY(0);}
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 .animate-slide-up {
     animation: slideUp 0.5s cubic-bezier(.4,2,.3,1);
@@ -106,6 +106,13 @@ body.dark .modality-tab.active {
 @keyframes slideUp {
     from { opacity: 0; transform: translateY(24px);}
     to { opacity: 1; transform: translateY(0);}
+}
+.animate-bounce {
+    animation: bounce 0.3s ease-in-out;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
 /* Floating help button */

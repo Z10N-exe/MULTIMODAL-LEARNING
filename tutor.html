@@ -23,32 +23,52 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .animate-slide-up { animation: slideUp 0.6s ease-out; }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        /* Floating help button */
+        #help-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 50;
+            background: #14b8a6;
+            color: #fff;
+            border-radius: 50%;
+            padding: 1rem;
+            box-shadow: 0 6px 24px rgba(20, 184, 166, 0.15);
+            transition: box-shadow 0.3s, background 0.3s;
+        }
+        #help-btn:hover, #help-btn:focus {
+            background: #0d9488;
+            box-shadow: 0 12px 32px rgba(20, 184, 166, 0.22);
+        }
+        @media (max-width: 768px) {
+            .card { padding: 1rem; }
+            .container { padding: 0 0.5rem; }
+            header .container { padding: 0 0.5rem; }
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased text-gray-800">
     <a href="#main-content" class="fixed top-0 left-0 p-2 bg-indigo-600 text-white focus:outline-none focus:ring-2 focus:ring-teal-400 z-50 sr-only focus:not-sr-only">Skip to main content</a>
     <div class="min-h-screen flex flex-col">
         <!-- Header -->
-        <header class="bg-indigo-600 text-white shadow-md">
-            <div class="container mx-auto px-4 py-6">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-2xl md:text-3xl font-bold flex items-center">
-                        <i data-lucide="book-open" class="mr-2"></i>
-                        Tutor Dashboard
-                    </h1>
-                    <div class="flex items-center space-x-4">
-                        <a href="index.html" class="text-white hover:text-teal-200 font-medium" aria-label="Back to Learning">Back to Learning</a>
-                        <button id="theme-toggle" class="p-2 rounded-full hover:bg-indigo-500 transition-colors" aria-label="Toggle dark mode">
-                            <i data-lucide="sun" class="hidden dark-icon"></i>
-                            <i data-lucide="moon" class="light-icon"></i>
-                        </button>
-                    </div>
+        <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-30">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl md:text-2xl font-bold flex items-center">
+                    <i data-lucide="book-open" class="mr-2"></i>
+                    Tutor Dashboard
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-white hover:text-teal-200 font-medium" aria-label="Back to Learning">Back to Learning</a>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-indigo-500 transition-colors" aria-label="Toggle dark mode">
+                        <i data-lucide="sun" class="hidden dark-icon"></i>
+                        <i data-lucide="moon" class="light-icon"></i>
+                    </button>
                 </div>
             </div>
         </header>
 
-        <main id="main-content" class="flex-grow container mx-auto px-4 py-8">
-            <div class="card p-6">
+        <main id="main-content" class="flex-grow container mx-auto px-2 md:px-4 py-6 md:py-8">
+            <div class="card p-6 animate-fade-in">
                 <h2 class="text-xl md:text-2xl font-semibold text-indigo-700 dark:text-indigo-400 mb-6">Upload New Lesson</h2>
                 <form id="lesson-upload-form" class="space-y-6">
                     <div>
@@ -61,20 +81,26 @@
                         <textarea id="lesson-content-input" rows="6" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:border-gray-600 dark:bg-gray-700" required aria-describedby="content-help"></textarea>
                         <p id="content-help" class="text-sm text-gray-500 dark:text-gray-400">Provide the lesson content in text format. It will be converted to audio and Nigerian Sign Language.</p>
                     </div>
-                    <button type="submit" class="btn-primary px-6 py-3 rounded-md font-medium transition-colors">Upload Lesson</button>
+                    <button type="submit" class="btn-primary px-6 py-3 rounded-md font-medium transition-colors flex items-center gap-2">
+                        <i data-lucide="upload-cloud"></i> Upload Lesson
+                    </button>
                 </form>
                 <div id="upload-status" class="mt-4 text-gray-600 dark:text-gray-300 hidden"></div>
             </div>
-            <div class="card p-6 mt-6">
+            <div class="card p-6 mt-6 animate-fade-in">
                 <h2 class="text-xl md:text-2xl font-semibold text-indigo-700 dark:text-indigo-400 mb-6">Uploaded Lessons</h2>
                 <ul id="uploaded-lessons" class="space-y-4"></ul>
             </div>
         </main>
 
+        <button id="help-btn" aria-label="Help">
+            <i data-lucide="help-circle"></i>
+        </button>
+
         <footer class="bg-gray-100 border-t border-gray-200 py-6">
-            <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+            <div class="container mx-auto px-2 md:px-4 text-center text-gray-500 text-sm">
                 <p>© 2025 DEPARTMENT OF INFORMATION TECHNOLOGY. All rights reserved.</p>
-                <div class="mt-2 flex justify-center space-x-4">
+                <div class="mt-2 flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-4">
                     <a href="#" class="hover:text-indigo-600 transition-colors">Accessibility</a>
                     <a href="#" class="hover:text-indigo-600 transition-colors">Privacy Policy</a>
                     <a href="#" class="hover:text-indigo-600 transition-colors">Terms of Service</a>
@@ -84,5 +110,39 @@
     </div>
 
     <script src="js/main.js"></script>
+    <script>
+        // Lucide icons
+        lucide.createIcons();
+
+        // Theme toggle
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark');
+        });
+
+        // Floating help button
+        document.getElementById('help-btn').addEventListener('click', function() {
+            alert('Need help? Contact support or check the documentation.');
+        });
+
+        // Example: Upload form interactivity (replace with real backend logic)
+        document.getElementById('lesson-upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('lesson-title-input').value.trim();
+            const content = document.getElementById('lesson-content-input').value.trim();
+            if (title && content) {
+                const ul = document.getElementById('uploaded-lessons');
+                const li = document.createElement('li');
+                li.className = "p-4 rounded bg-indigo-50 dark:bg-indigo-900 shadow flex flex-col md:flex-row md:items-center justify-between animate-slide-up";
+                li.innerHTML = `<span class="font-semibold text-indigo-700 dark:text-indigo-400">${title}</span>
+                    <span class="text-gray-600 dark:text-gray-300 mt-2 md:mt-0 md:ml-4">${content.substring(0, 60)}${content.length > 60 ? '...' : ''}</span>
+                    <button class="ml-4 text-red-500 hover:text-red-700 transition-colors" onclick="this.parentElement.remove()" aria-label="Delete lesson"><i data-lucide="trash-2"></i></button>`;
+                ul.appendChild(li);
+                document.getElementById('upload-status').textContent = "Lesson uploaded successfully!";
+                document.getElementById('upload-status').classList.remove('hidden');
+                document.getElementById('lesson-upload-form').reset();
+                lucide.createIcons();
+            }
+        });
+    </script>
 </body>
 </html>
